@@ -25,6 +25,7 @@ FetchContent_MakeAvailable(googletest)
 # Include jsoncpp
 find_package(SQLite3 REQUIRED)
 find_package(jsoncpp REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 # To find intermediary
 set(SOURCES
@@ -46,6 +47,7 @@ target_link_libraries(
   GTest::gmock_main
   jsoncpp_lib
   SQLite::SQLite3
+  nlohmann_json::nlohmann_json
 )
 
 include(GoogleTest)
