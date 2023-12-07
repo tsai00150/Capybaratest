@@ -68,6 +68,7 @@ jobs:
     - name: Code Coverage
       run: |
         choco install opencppcoverage
+        Y
         refreshenv
         OpenCppCoverage --sources ${GITHUB_WORKSPACE}\Capybara --excluded_sources ${GITHUB_WORKSPACE}\Unittest --export_type html:CoverageReport -- ${GITHUB_WORKSPACE}\Unittest\build-unittest\Release\Unittest.exe
         cd ./CoverageReport/Modules
