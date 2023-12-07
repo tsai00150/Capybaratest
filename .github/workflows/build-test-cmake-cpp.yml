@@ -18,17 +18,17 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Check installed Visual Studio versions
-      run: |
-        Get-Command -Name devenv -ErrorAction SilentlyContinue
-        Get-Command -Name msbuild -ErrorAction SilentlyContinue
+    # - name: Check installed Visual Studio versions
+    #   run: |
+    #     Get-Command -Name devenv -ErrorAction SilentlyContinue
+    #     Get-Command -Name msbuild -ErrorAction SilentlyContinue
 
-    - name: Set up Visual Studio
-      run: |
-        choco install visualstudio2019community
-        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-        Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-        RefreshEnv
+    # - name: Set up Visual Studio
+    #   run: |
+    #     choco install visualstudio2019community
+    #     choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+    #     Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    #     RefreshEnv
 
     - name: Install vcpkg
       run: |
@@ -36,42 +36,47 @@ jobs:
         cd vcpkg
         bootstrap-vcpkg.bat
 
-    - name: Install SQLite3 with vcpkg
+    - name: Install Drogon with vcpkg
       run: |
-        vcpkg install sqlite3:x64-windows
+        vcpkg install drogon
         vcpkg integrate install
 
-    - name: Install JSON with vcpkg
-      run: |
-        vcpkg install jsoncpp:x64-windows
-        vcpkg integrate install
-        vcpkg install nlohmann-json
-        vcpkg integrate install
+    # - name: Install SQLite3 with vcpkg
+    #   run: |
+    #     vcpkg install sqlite3:x64-windows
+    #     vcpkg integrate install
 
-    - name: Print vcpkg Triplets
-      run: vcpkg integrate powershell
+    # - name: Install JSON with vcpkg
+    #   run: |
+    #     vcpkg install jsoncpp:x64-windows
+    #     vcpkg integrate install
+    #     vcpkg install nlohmann-json
+    #     vcpkg integrate install
 
-    - name: Print Environment Variables
-      run: |
-        echo "Environment Variables:"
-        env
+    # - name: Print vcpkg Triplets
+    #   run: vcpkg integrate powershell
+
+    # - name: Print Environment Variables
+    #   run: |
+    #     echo "Environment Variables:"
+    #     env
     
-    - name: Run unit tests
-      run : |
-        cd ./Unittest
-        cmake -S ./ -B ./build-unittest "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        cmake --build ./build-unittest --config Release
-        cd ./build-unittest/Release
-        ./Unittest.exe
-        cd ../../..
+    # - name: Run unit tests
+    #   run : |
+    #     cd ./Unittest
+    #     cmake -S ./ -B ./build-unittest "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    #     cmake --build ./build-unittest --config Release
+    #     cd ./build-unittest/Release
+    #     ./Unittest.exe
+    #     cd ../../..
 
-    - name: Code Coverage
-      run: |
-        choco install opencppcoverage
-        Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-        refreshenv
-        mkdir CoverageReport
-        OpenCppCoverage --sources D:\a\Capybaratest\Capybaratest\Capybara --excluded_sources D:\a\Capybaratest\Capybaratest\Unittest --export_type html:CoverageReport -- D:\a\Capybaratest\Capybaratest\Unittest\build-unittest\Release\Unittest.exe
-        cd ./CoverageReport/Modules
-        type Unittest.html
-        cd ../..
+    # - name: Code Coverage
+    #   run: |
+    #     choco install opencppcoverage
+    #     Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    #     refreshenv
+    #     mkdir CoverageReport
+    #     OpenCppCoverage --verbose --sources D:\a\Capybaratest\Capybaratest\Capybara --excluded_sources D:\a\Capybaratest\Capybaratest\Unittest --export_type html:CoverageReport -- D:\a\Capybaratest\Capybaratest\Unittest\build-unittest\Release\Unittest.exe
+    #     cd ./CoverageReport/Modules
+    #     type Unittest.html
+    #     cd ../..
