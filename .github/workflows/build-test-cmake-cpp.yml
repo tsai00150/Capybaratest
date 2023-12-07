@@ -70,7 +70,8 @@ jobs:
         choco install opencppcoverage
         Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
         refreshenv
-        OpenCppCoverage --sources ${GITHUB_WORKSPACE}\Capybara --excluded_sources ${GITHUB_WORKSPACE}\Unittest --export_type html:CoverageReport -- ${GITHUB_WORKSPACE}\Unittest\build-unittest\Release\Unittest.exe
+        mkdir CoverageReport
+        OpenCppCoverage --sources D:\a\Capybaratest\Capybaratest\Capybara --excluded_sources D:\a\Capybaratest\Capybaratest\Unittest --export_type html:CoverageReport -- D:\a\Capybaratest\Capybaratest\Unittest\build-unittest\Release\Unittest.exe
         cd ./CoverageReport/Modules
         type Unittest.html
         cd ../..
