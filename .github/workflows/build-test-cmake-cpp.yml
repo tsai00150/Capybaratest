@@ -57,7 +57,7 @@ jobs:
     - name: Run unit tests
       run : |
         cd ./Unittest
-        cmake -S ./ -B ./build-unittest
+        cmake -S ./ -B ./build-unittest "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         cmake --build ./build-unittest --config Release
         cd ./build-unittest/Release
         ./Unittest.exe
