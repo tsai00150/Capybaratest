@@ -63,4 +63,13 @@ jobs:
         cmake --build ./build-unittest --config Release
         cd ./build-unittest/Release
         ./Unittest.exe
+        cd ../../..
 
+    - name: Code Coverage
+      run: |
+        choco install opencppcoverage
+        refreshenv
+        OpenCppCoverage --sources C:\Users\Tsai\Capybara2\Capybara --excluded_sources C:\Users\Tsai\Capybara2\Unittest --export_type html:CoverageReport -- C:\Users\Tsai\Capybara2\out\build\x64-debug\Unittest\Unittest.exe
+        cd ./CoverageReport/Modules
+        type Unittest.html
+        cd ../..
